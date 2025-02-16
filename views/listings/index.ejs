@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wanderLust</title>
-</head>
+<% layout('./layouts/boilerplate') -%>
 <body>
     <h2>ALL Available Stays</h2>
     <form action="/listings/new" method="get">
@@ -15,4 +9,3 @@
     <li><a href="/listings/<%= Listing._id%>"><%= Listing.title%></a></li>
         <%}%>
 </body>
-</html>
