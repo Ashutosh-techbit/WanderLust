@@ -1,0 +1,14 @@
+1. client side validation using bootstrap classes
+    -> make things required in form
+    -> add bootstrap validations using novalidate , needs-validation
+
+2. server side validation using joi npm package 
+    -> create joi schema -> require schema in app.js -> create validate function -> pass validate function as middleware
+
+
+populate() -> The populate() method in Mongoose is used to automatically replace a field in a document with the actual data from a related document.
+
+$pull
+The $pull operator removes from an existing array all instances of a value or values that match a specified condition.
+
+
