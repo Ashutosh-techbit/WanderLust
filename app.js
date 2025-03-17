@@ -1,16 +1,15 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const Listing = require("./models/listing.js");
+// const Listing = require("./models/listing.js");
 const path = require("path")
 const methodOverride  = require("method-override")
 const ejsMate = require("ejs-mate");
-const wrapAsync = require("./utils/wrapAsync.js")
+// const wrapAsync = require("./utils/wrapAsync.js")
 const ExpressError = require("./utils/ExpressError.js")
-// const {listingSchema } = require("./schema.js");
-const Review = require("./models/review.js");
-const {listingSchema , reviewSchema} = require("./schema.js");
-// const review = require("./models/review.js");
+
+const listings = require("./routes/listings.js");
+const reviews = require("./routes/review.js");
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"))
@@ -32,100 +31,8 @@ app.get("/", (req, res) => {
   res.send("server started");
 });
 
-const validatelisting = (req,res,next)=>{
-  let {error} =  listingSchema.validate(req.body); //server side validation by Joi npm package
-  if(error){
-    let errMsg = error.details.map((el)=>el.message).join(",");
-    throw new ExpressError(400,errMsg);
-  }else{
-    next();
-  }
-}
-
-//index route-list of all hotels
-app.get("/listings",wrapAsync(async (req,res)=>{
-
-  let allListings = await Listing.find({});
-  res.render("./listings/index.ejs",{allListings});
-}))
-
-//create new listing - handle request from user
-app.get("/listings/new",(req,res)=>{
-  res.render("./listings/new.ejs");
-})
-
-//create route
-app.post("/listings", validatelisting , wrapAsync(async (req,res,next)=>{
- 
-  const newlisting = new Listing(req.body.listing)
-  await newlisting.save()
-  res.redirect("/listings")
-})
-);
-
-//show route
-app.get("/listings/:id", wrapAsync(async(req,res)=>{
-  let {id} = req.params;
-  // let listing = await Listing.findById(id);
-  const listing = await Listing.findById(id).populate("reviews");
-  res.render("./listings/show.ejs",{listing});
-}))
-
-app.get("/listings/:id/edit",wrapAsync(async (req,res)=>{
-  let {id} = req.params;
-  let listing = await Listing.findById(id);
-    res.render("./listings/edit.ejs",{listing});
-
-}))
-
-app.put("/listings/:id", validatelisting , wrapAsync(async (req,res)=>{
-   let{id} = req.params;
-  await Listing.findByIdAndUpdate(id,{...req.body.listing}); // parsing by ...
-  res.redirect(`/listings/${id}`)
-  }))
-
-//delete route 
-app.delete("/listings/:id",wrapAsync( async(req,res)=>{
-  let {id} =req.params;
-  let deletedlisting = await Listing.findByIdAndDelete(id);
-  res.redirect("/listings")
-}))
-
-
-//Reviews
-
-// //review vlidation
-const validateReview = (req,res,next)=>{
-  let {error} =  reviewSchema.validate(req.body); //server side validation by Joi npm package
-  if(error){
-    let errMsg = error.details.map((el)=>el.message).join(",");
-    throw new ExpressError(400,errMsg);
-  }else{
-    next();
-  }
-};
-
-//post review route
-app.post("/listings/:id/reviews",validateReview,wrapAsync(async(req,res)=>{
-  let listing = await Listing.findById(req.params.id);
-  let newReview = new Review(req.body.review);
-  listing.reviews.push(newReview);
-  await newReview.save()
-  await listing.save()
-  res.redirect(`/listings/${listing._id}`);
-}));
-
-
-// //delete reviews
-app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async (req,res)=>{
-  let {id,reviewId} = req.params;
-
-  await Listing.findByIdAndUpdate(id,{$pull: {reviews : reviewId} });
-   await Review.findByIdAndDelete(reviewId);
-   res.redirect(`/listings/${id}`)
-}))
-
-
+app.use("/listings",listings);
+app.use("/listings/:id/reviews",reviews );
 
 // app.get("/testListing",wrapAsync( async (req, res) => {
 //   let sampleListing = new Listing({
@@ -139,6 +46,7 @@ app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async (req,res)=>{
 //   console.log("listed");
 //   res.send("gotcha");
 //   }));
+
 
 //for all non-existing routes
 app.all("*",(req,res,next)=>{
