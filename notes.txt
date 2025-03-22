@@ -6,9 +6,49 @@
     -> create joi schema -> require schema in app.js -> create validate function -> pass validate function as middleware
 
 
+============================================================================================================================================
+
 populate() -> The populate() method in Mongoose is used to automatically replace a field in a document with the actual data from a related document.
+
+============================================================================================================================================
 
 $pull
 The $pull operator removes from an existing array all instances of a value or values that match a specified condition.
 
+============================================================================================================================================
+Express Router - express router are a way to organise your express application such that our primary app.js file does not become bloated(confusing)
 
+const router = express.Router(); //create Router object
+
+1.create seprate file for user , posts , review , listing with all thier common routes and the exports module
+2. use common path in main file(app.js) for specified api call /user , /review , /posts etc..
+
+============================================================================================================================================
+
+COOKIES --> (WEB COOKIES) HTTP cookies are small blocks of data created by web server while a user is browsing a website and placed on user's computer or other device by the user's web browser
+
+res.cookies("name","value"); //send cookies through this
+
+============================================================================================================================================
+Signed Cookies - Signed cookies are a method used to securely store cookies in web applications, ensuring their integrity and authenticity. They are particularly useful when you want to store data in a user's browser but need to ensure that the data has not been tampered with.
+
+app.use(cookieparser("secret"));
+
+app.get("/getsignedcookies",(req,res)=>{
+    res.cookie("color","red",{signed:true});
+    res.send("signed cookie sent")
+})
+
+app.get("/verify",(req,res)=>{
+    console.log(req.signedCookies);
+    res.send("verified");
+})
+
+
+
+============================================================================================================================================
+
+STATE -> Statefull and Stateless
+
+Statefull - save status and session information . Eg - FTP
+Stateless  - save no status and session information . Eg - HTTP
