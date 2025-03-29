@@ -48,7 +48,11 @@ app.get("/verify",(req,res)=>{
 
 ============================================================================================================================================
 
+session - when a client interact with server , it is called a single session
+
 STATE -> Statefull and Stateless
 
 Statefull - save status and session information . Eg - FTP
 Stateless  - save no status and session information . Eg - HTTP
+
+//npm package for quick and one time message - flash-message  
