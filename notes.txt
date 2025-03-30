@@ -56,3 +56,11 @@ Statefull - save status and session information . Eg - FTP
 Stateless  - save no status and session information . Eg - HTTP
 
 //npm package for quick and one time message - flash-message => they show message(like success , user registered , payment done) once only even after refreshing
+
+res.locals -> used to create variables used in multiple templated  which are required to be send through res.render each time , can now direclty sent through res.locals variables
+
+============================================================================================================================================
+
+Authentication - Process of verifying who someone is (like a facedetection , fingerprint for a perosn want phone access)
+
+Authorization - Process of verifying what specific applications , files and data a user has access to.(specific likes , reviews , comments can be modified by specific user only).
