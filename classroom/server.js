@@ -27,7 +27,11 @@ app.get("/register",(req,res)=>{
 
 app.get("/hello",(req,res)=>{
     // res.send(`hello, ${req.session.name}`)
-    res.render("page.ejs",{name:req.session.name,msg:req.flash("success")})
+
+    // res.render("page.ejs",{name:req.session.name,msg:req.flash("success")})
+
+    res.locals.msg = req.flash("success"); //used when a vaiable is need to send to views with render ~
+    res.render("page.ejs",{name:req.session.name})
 
 })
 

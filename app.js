@@ -7,6 +7,8 @@ const methodOverride  = require("method-override")
 const ejsMate = require("ejs-mate");
 // const wrapAsync = require("./utils/wrapAsync.js")
 const ExpressError = require("./utils/ExpressError.js")
+const session = require("express-session");
+const flash = require("connect-flash");
 
 
 const listings = require("./routes/listings.js");
@@ -17,9 +19,23 @@ app.set("views",path.join(__dirname,"views"))
 
 app.engine('ejs', ejsMate); //setting template engine as ejsMate
 
+//session
+const sessionoptions = {
+  secret : "mysupersecretcode",
+  resave : false,
+  saveUninitialized : true,
+  cookie:{
+    expires : Date.now() +  7 * 24 * 60 * 60 * 1000 ,
+    maxAge : 7*24*60*60*1000,
+    httpOnly : true,
+  }
+}
+
+
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"))
 app.use(express.static(path.join(__dirname,"/public")));
+
 
 main()
 .then(() => console.log("connected to db"))
@@ -31,6 +47,14 @@ async function main() {
 app.get("/", (req, res) => {
   res.send("server started");
 });
+
+app.use(session(sessionoptions))
+app.use(flash());
+
+app.use((req,res,next)=>{
+   res.locals.success = req.flash("success");
+   next();
+})
 
 app.use("/listings",listings);
 app.use("/listings/:id/reviews",reviews );
