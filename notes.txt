@@ -64,3 +64,8 @@ res.locals -> used to create variables used in multiple templated  which are req
 Authentication - Process of verifying who someone is (like a facedetection , fingerprint for a perosn want phone access)
 
 Authorization - Process of verifying what specific applications , files and data a user has access to.(specific likes , reviews , comments can be modified by specific user only).
+
+Hashing function (one way function) -> Used for password encyption 
+
+Passport(npm package) - express compatible Authentication middleware for nodejs
+Salt - random string(added in password)

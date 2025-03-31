@@ -9,10 +9,14 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js")
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js")
 
 
-const listings = require("./routes/listings.js");
-const reviews = require("./routes/review.js");
+const listingsRouter = require("./routes/listings.js");
+const reviewsRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"))
@@ -51,14 +55,35 @@ app.get("/", (req, res) => {
 app.use(session(sessionoptions))
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate())); //authenticate user
+
+passport.serializeUser(User.serializeUser()) //store login data
+passport.deserializeUser(User.deserializeUser()) //remove login data
+
+// ========== create a fake demo user for testing ====================
+// app.get("/demouser",async (req,res)=>{
+//      let fakeuser = ({
+//       email :"eve@gmail.com",
+//       username:"eva" // we dont intialised in schema , it is intialised by passport itself ; every time username must be unique
+//      });
+
+//       let registereduser1 = await User.register(fakeuser,"eve123");
+//      res.send(registereduser1);
+// })
+
+
 app.use((req,res,next)=>{
    res.locals.success = req.flash("success");
    res.locals.error = req.flash("error");
    next();
 })
 
-app.use("/listings",listings);
-app.use("/listings/:id/reviews",reviews );
+//routes middlewares
+app.use("/listings",listingsRouter);
+app.use("/listings/:id/reviews",reviewsRouter );
+app.use("/",userRouter);
 
 // app.get("/testListing",wrapAsync( async (req, res) => {
 //   let sampleListing = new Listing({
