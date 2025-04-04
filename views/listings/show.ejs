@@ -11,12 +11,13 @@
       <div class="card  col-6 offset-3 show-card listing-card" >
                 <img src="<%= listing.image %>" class="card-img-top show-img" alt="Listing-image">
               <div class="card-body">
-            <p class="card-text">
-                <p>Description : <%= listing.description %></p>
-                <p>Price : &#8377;<%= listing.price.toLocaleString("en-IN") %></p>
-                <p>Location : <%= listing.location %></p>
-                <p>Country : <%= listing.country %></p>
-              </p>
+           
+              <p class="card-text">Owned By: <%= listing.owner.username%></p>
+              <p class="card-text">Description : <%= listing.description %></p>
+                <p class="card-text">Price : &#8377;<%= listing.price.toLocaleString("en-IN") %></p>
+                <p class="card-text">Location : <%= listing.location %></p>
+                <p class="card-text">Country : <%= listing.country %></p>
+            
           </div>
       </div>
 
