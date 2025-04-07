@@ -69,3 +69,12 @@ Hashing function (one way function) -> Used for password encyption
 
 Passport(npm package) - express compatible Authentication middleware for nodejs
 Salt - random string(added in password)
+
+============================================================================================================================================
+
+Used MVC framework for code simplicity and readiability - MVC(Model,Views,Controller) 
+
+
+model - for Database files
+views - for Frontend files
+Controller - for backend files
