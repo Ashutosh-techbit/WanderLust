@@ -78,3 +78,13 @@ Used MVC framework for code simplicity and readiability - MVC(Model,Views,Contro
 model - for Database files
 views - for Frontend files
 Controller - for backend files
+
+============================================================================================================================================
+
+Styling rating section ->
+
+https://github.com/LunarLogic/starability
+
+Multer (npm pkge) -> to Process multipart form (upload images)
+
+cloudinary - used for listing image  storage

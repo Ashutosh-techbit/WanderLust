@@ -1,9 +1,19 @@
+if(process.env.NODE_ENV!="production"){
+  require('dotenv').config()
+}
+
+console.log(process.env.SECRET)
+
+
 const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const Listing = require("../models/listing.js");
 const { isloggedin, isOwner, validatelisting } = require("../middleware.js");
 const listingController = require("../controllers/listings.js")
+const multer  = require('multer')
+const {storage} = require('../cloudConfig')
+const upload = multer({ storage })
 
 router.route("/")
 .get(
@@ -11,9 +21,11 @@ router.route("/")
 )
 .post(
   isloggedin,
+  upload.single('listing[image]'),
   validatelisting,
   wrapAsync(listingController.createListing)
 );
+
 
 //create new listing - handle request from user
 //New route
