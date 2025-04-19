@@ -98,14 +98,14 @@ body{
     /* =================new page=================== */
 
     .add-btn{
-        background-color: rgb(255, 69, 69) !important;
+        background-color: #fe424d !important;
         border: none !important;
     }
 
     /* ==============================edit page================== */
 
     .edit-btn{
-        background-color: rgb(255, 69, 69) !important;
+        background-color: #fe424d !important;
         border: none !important;
     }
 
@@ -123,4 +123,10 @@ body{
     .show-card{
         padding-left: 0;
         padding-right: 0;
+    }
+
+    /* ====================map */
+    #map{
+        height: 400px;
+        width: 80vh;
     }

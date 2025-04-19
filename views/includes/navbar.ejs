@@ -1,25 +1,72 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top">
+<style>
+
+  .search-btn{
+    background: #fe424d;
+    color: white;
+    border-radius: 25px;
+    border: 1px solid red;
+    /* padding: 0rem 1rem 0rem 1rem; */
+    font-size: 0.9rem;
+  }
+  .search-btn:hover{
+    background: #fe424d;
+    color: white;
+    border-radius: 25px;
+    border: 1px solid red;
+  }
+  
+  .search-inp{
+    font-size: 0.9rem;
+    border-radius: 25px;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+  }
+  
+  .search-btn i{
+    display: inline;
+    margin-right: 0.3rem;
+    padding: 0.5rem;
+  }
+
+  .navhover:hover{
+   background: #efeeee;
+   border-radius: 25px;
+  }
+
+
+
+</style>
+
+
+<nav class="navbar  navbar-expand-lg bg-body-tertiary border-bottom sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
+      <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link "  href="/">Home</a>
-          <a class="nav-link" href="/listings">All Listings</a>
-          <a class="nav-link" href="/listings/new">Create New Listing</a>
+          <a class="nav-link" href="/listings">Explore</a>
           <!-- <a class="nav-link disabled" aria-disabled="true">Disabled</a> -->
         </div>
+
+        <!-- ============= search =========== -->
+        <div class="search-box navbar-nav ms-auto ">
+          <form class="d-flex" role="search">
+            <input class="form-control me-2 search-inp"  type="search" placeholder="Search Destinations" aria-label="Search">
+            <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+          </form>
+        </div>
+
         <div class="navbar-nav ms-auto">
+          <a class="nav-link navhover" href="/listings/new">Airbnb Your Place</a>
           <% if (!currUser) { %>
-            <a class="nav-link "  href="/signup">SignUp</a>
-            <a class="nav-link" href="/login">Login</a>
+            <a class="nav-link navhover"  href="/signup"><b>SignUp</b></a>
+            <a class="nav-link navhover" href="/login"><b>Login</b></a>
             <% } %>
            
             <% if (currUser) { %>
              
-              <a class="nav-link" href="/logout">LogOut</a>
+              <a class="nav-link navhover" href="/logout"><b>LogOut</b></a>
             <% } %>
         </div>
       </div>
