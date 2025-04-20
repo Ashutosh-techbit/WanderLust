@@ -48,6 +48,11 @@ const sessionoptions = {
   }
 }
 
+
+app.get("/", (req, res) => {
+  res.redirect("/listings");  // This will take users to /listings (like your listings page)
+});
+
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"))
 app.use(express.static(path.join(__dirname,"/public")));
